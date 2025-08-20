@@ -1,18 +1,39 @@
+from django.db.models import Q
 from django.shortcuts import get_object_or_404, redirect
 from django.urls import reverse_lazy
 from django.views import generic
 from django.contrib import messages
 
-from todo_app.forms import TaskForm
+from todo_app.forms import TaskForm, TaskSearchForm
 from todo_app.models import Task, Tag
 
 
 class TaskListView(generic.ListView):
     model = Task
     paginate_by = 4
-    queryset = Task.objects.prefetch_related("tags").order_by(
-        "is_done", "-created_at"
-    )
+
+    def get_queryset(self):
+        queryset = Task.objects.prefetch_related("tags").order_by(
+            "is_done", "-created_at"
+        )
+
+        form = TaskSearchForm(self.request.GET)
+        if form.is_valid():
+            search_query = form.cleaned_data.get("search")
+            if search_query:
+                queryset = queryset.filter(
+                    Q(content__icontains=search_query) |
+                    Q(tags__name__icontains=search_query)
+                ).distinct()
+
+        return queryset
+
+    def get_context_data(
+        self, *, object_list =None, **kwargs
+    ):
+        context = super(TaskListView, self).get_context_data(**kwargs)
+        context["search_form"] = TaskSearchForm(self.request.GET)
+        return context
 
 
 class TaskCreateView(generic.CreateView):
