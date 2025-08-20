@@ -14,7 +14,7 @@ class Tag(models.Model):
 
 
 class Task(models.Model):
-    content = models.TextField(max_length=512, blank=True)
+    content = models.TextField(max_length=512, blank=False)
     created_at = models.DateTimeField(auto_now_add=True)
     deadline = models.DateTimeField(null=True, blank=True)
     is_done = models.BooleanField(default=False)
