@@ -21,12 +21,12 @@
 
           <p>Created: {{ task.created_at }}</p>
           {% if task.deadline %}
-            <p>Deadline: {{ task.deadline }}</p>
+            <p>Deadline: <span class="text-danger fw-bold">{{ task.deadline }}</span></p>
           {% endif %}
 
           <p>Tags:
             {% for tag in task.tags.all %}
-              {{ tag.name }}{% if not forloop.last %}, {% endif %}
+              <span class="badge bg-secondary me-1">{{ tag.name }}</span>
             {% endfor %}
           </p>
 

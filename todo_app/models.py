@@ -2,7 +2,7 @@ from django.db import models
 
 
 class Tag(models.Model):
-    name = models.CharField(max_length=63)
+    name = models.CharField(max_length=63, unique=True)
 
     class Meta:
         verbose_name = "Tag"

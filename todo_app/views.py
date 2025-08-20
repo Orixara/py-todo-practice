@@ -1,6 +1,7 @@
 from django.shortcuts import get_object_or_404, redirect
 from django.urls import reverse_lazy
 from django.views import generic
+from django.contrib import messages
 
 from todo_app.forms import TaskForm
 from todo_app.models import Task, Tag
@@ -18,6 +19,10 @@ class TaskCreateView(generic.CreateView):
     model = Task
     form_class = TaskForm
     success_url = reverse_lazy("todo:task-list")
+
+    def form_valid(self, form):
+        messages.success(self.request, 'Task created successfully!')
+        return super().form_valid(form)
 
 
 class TaskUpdateView(generic.UpdateView):
@@ -55,6 +60,10 @@ class TagCreateView(generic.CreateView):
     model = Tag
     fields = ["name"]
     success_url = reverse_lazy("todo:tag-list")
+
+    def form_valid(self, form):
+        messages.success(self.request, 'Tag created successfully!')
+        return super().form_valid(form)
 
 
 class TagUpdateView(generic.UpdateView):
