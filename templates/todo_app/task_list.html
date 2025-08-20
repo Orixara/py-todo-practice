@@ -32,8 +32,8 @@
 
           <div class="d-flex justify-content-between">
             <div>
-              <a href="#" class="btn btn-primary">Update</a>
-              <a href="#" class="btn btn-danger">Delete</a>
+              <a href="{% url 'todo:task-update' pk=task.id %}" class="btn btn-primary">Update</a>
+              <a href="{% url 'todo:task-delete' pk=task.id %}" class="btn btn-danger">Delete</a>
             </div>
             <div>
               {% if task.is_done %}

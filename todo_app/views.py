@@ -19,6 +19,47 @@ class TaskCreateView(generic.CreateView):
     success_url = reverse_lazy("todo:task-list")
 
 
+class TaskUpdateView(generic.UpdateView):
+    model = Task
+    form_class = TaskForm
+    success_url = reverse_lazy("todo:task-list")
+
+
+class TaskDeleteView(generic.DeleteView):
+    model = Task
+    success_url = reverse_lazy("todo:task-list")
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['object_name'] = 'task'
+        context['display_text'] = self.object.content
+        context['cancel_url'] = reverse_lazy('todo:task-list')
+        return context
+
 class TagListView(generic.ListView):
     model = Tag
     queryset = Tag.objects.order_by("name")
+
+
+class TagCreateView(generic.CreateView):
+    model = Tag
+    fields = ["name"]
+    success_url = reverse_lazy("todo:tag-list")
+
+
+class TagUpdateView(generic.UpdateView):
+    model = Tag
+    fields = ["name"]
+    success_url = reverse_lazy("todo:tag-list")
+
+
+class TagDeleteView(generic.DeleteView):
+    model = Tag
+    success_url = reverse_lazy("todo:tag-list")
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['object_name'] = 'tag'
+        context['display_text'] = self.object.name
+        context['cancel_url'] = reverse_lazy('todo:tag-list')
+        return context

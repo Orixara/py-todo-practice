@@ -1,0 +1,8 @@
+{% load crispy_forms_filters %}
+
+<h1>{{ object|yesno:"Update,Create" }} {{ object_name }}</h1>
+<form action="" method="post" novalidate>
+    {% csrf_token %}
+    {{ form|crispy }}
+    <input type="submit" value="{{ object|yesno:'Update,Create' }}" class="btn btn-primary">
+</form>
