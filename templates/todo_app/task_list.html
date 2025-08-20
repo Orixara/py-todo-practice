@@ -37,9 +37,15 @@
             </div>
             <div>
               {% if task.is_done %}
-                <a href="#" class="btn btn-secondary">Undo</a>
+                <form method="post" action="{% url 'todo:task-toggle' task.pk %}" style="display: inline;">
+                  {% csrf_token %}
+                  <input type="submit" value="Undo" class="btn btn-secondary">
+                </form>
               {% else %}
-                <a href="#" class="btn btn-success">Complete</a>
+                <form method="post" action="{% url 'todo:task-toggle' task.pk %}" style="display: inline;">
+                  {% csrf_token %}
+                  <input type="submit" value="Complete" class="btn btn-success">
+                </form>
               {% endif %}
             </div>
         </div>
