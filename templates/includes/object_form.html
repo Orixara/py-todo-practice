@@ -5,4 +5,5 @@
     {% csrf_token %}
     {{ form|crispy }}
     <input type="submit" value="{{ object|yesno:'Update,Create' }}" class="btn btn-primary">
+    <a href="{% url cancel_url %}" class="btn btn-secondary">Cancel</a>
 </form>
